@@ -4,7 +4,7 @@ let logEntries = [];
 
 // Gets input from input field
 function getUserNumberInput() {
-  return parseInt(userInput.value);
+  return parseInt(usrInput.value);
 }
 
 // Generates and writes calculation log
@@ -15,13 +15,13 @@ function createAndWriteOutput(operator, resultBeforeCalc, calcNumber) {
 
 function writeToLog(
   operationIdentifier,
-  preResult,
+  prevResult,
   operationNumber,
   newResult
 ) {
   const logEntry = {
     operation: operationIdentifier,
-    preResult: preResult,
+    prevResult: prevResult,
     number: operationNumber,
     result: newResult,
   };
@@ -29,84 +29,60 @@ function writeToLog(
   console.log(logEntries);
 }
 
-// function add() {
-//   const enteredNumber = getUserNumberInput();
-//   const initialResult = currentResult;
-//   currentResult += enteredNumber;
-//   createAndWriteOutput('+', initialResult, enteredNumber);
-//   writeToLog('ADD', initialResult, enteredNumber, currentResult);
-// }
-
-// function subtract() {
-//   const enteredNumber = getUserNumberInput();
-//   const initialResult = currentResult;
-//   currentResult -= enteredNumber;
-//   createAndWriteOutput('-', initialResult, enteredNumber);
-//   writeToLog('SUBTRACT', initialResult, enteredNumber, currentResult);
-// }
-
-// function multiply() {
-//   const enteredNumber = getUserNumberInput();
-//   const initialResult = currentResult;
-//   currentResult *= enteredNumber;
-//   createAndWriteOutput('*', initialResult, enteredNumber);
-//   writeToLog('MULTIPLY', initialResult, enteredNumber, currentResult);
-// }
-
-// function divide() {
-//   const enteredNumber = getUserNumberInput();
-//   const initialResult = currentResult;
-//   currentResult /= enteredNumber;
-//   createAndWriteOutput('/', initialResult, enteredNumber);
-//   writeToLog('DIVIDE', initialResult, enteredNumber, currentResult);
-// }
-
-function calculate(operation) {
+function calculateResult(calculateType) {
   const enteredNumber = getUserNumberInput();
-  if(
-     operation !== 'ADD' && 
-     operation !== 'SUBTRACT' && 
-     operation !== 'MULTIPLY' && 
-     operation !== 'DIVID' || 
-     !enteredNumber
-    )
-  { 
-    return; 
+  if (
+    (calculateType !== 'ADD' &&
+      calculateType !== 'SUBTRACT' &&
+      calculateType !== 'MULTIPLY' &&
+      calculateType !== 'DIVIDE') ||
+    !enteredNumber
+  ) {
+    return;
   }
+  // if (
+  //   calculateType === 'ADD' ||
+  //   calculateType === 'SUBTRACT' ||
+  //   calculateType === 'MULTIPLY' ||
+  //   calculateType === 'DIVIDE'
+  // ) {
   const initialResult = currentResult;
-  let operator;
-  if (operation === 'ADD') {
+  let mathOperation;
+  if (calculateType === 'ADD') {
     currentResult += enteredNumber;
-    operator = '+';
-  } else if (operation === 'SUBTRACT') {
+    mathOperation = '+';
+  } else if (calculateType === 'SUBTRACT') {
     currentResult -= enteredNumber;
-    operator = '-';
-  } else if (operation === 'MULTIPLY') {
+    mathOperation = '-';
+  } else if (calculateType === 'MULTIPLY') {
     currentResult *= enteredNumber;
-    operator = '*';
-  } else {
+    mathOperation = '*';
+  } else if (calculateType === 'DIVIDE') {
     currentResult /= enteredNumber;
-    operator = '/';
+    mathOperation = '/';
   }
-  createAndWriteOutput(operator, initialResult, enteredNumber);
-  writeToLog(operation, initialResult, enteredNumber, currentResult);
+  createAndWriteOutput(mathOperation, initialResult, enteredNumber);
+  writeToLog(calculateType, initialResult, enteredNumber, currentResult);
+  // }
 }
 
-addBtn.addEventListener('click', calculate.bind(this, 'ADD'));
-subtractBtn.addEventListener('click', calculate.bind(this, 'SUBTRACT'));
-multiplyBtn.addEventListener('click', calculate.bind(this, 'MULTIPLY'));
-divideBtn.addEventListener('click', calculate.bind(this, 'DIVID'));
+function add() {
+  calculateResult('ADD');
+}
 
-// add(5, 5);
-// currentResult = add(1, 2);
-// currentResult = ((currentResult + 10) * 3) / 2 - 1;
-// let calculationDescription = '(' + defaultResult + ' + 10) * 3 / 2 - 1';
-// let calculationDescription = `(${defaultResult} + 10) * 3 / 2 - 1`;
-// let errorMessage = 'An error \n' + 'occurred!';
-// function add(num1, num2) {
-//   const result = num1 + num2;
-//   // alert('The result is ' + result);
-//   return result;
-// }
+function subtract() {
+  calculateResult('SUBTRACT');
+}
 
-// alert('This works!');
+function multiply() {
+  calculateResult('MULTIPLY');
+}
+
+function divide() {
+  calculateResult('DIVIDE');
+}
+
+addBtn.addEventListener('click', add);
+subtractBtn.addEventListener('click', subtract);
+multiplyBtn.addEventListener('click', multiply);
+divideBtn.addEventListener('click', divide);
